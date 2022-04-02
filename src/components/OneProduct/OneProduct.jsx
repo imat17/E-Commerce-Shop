@@ -17,8 +17,8 @@ const OneProduct = ({ onAddToCart }) => {
     const { id } = useParams();
 
     const getOneProduct = async (id) => {
-        const response = await commerce.products.retrieve(id);
-        setProduct(response)
+        const data = await commerce.products.retrieve(id);
+        setProduct(data)
     }
 
     console.log(product)
