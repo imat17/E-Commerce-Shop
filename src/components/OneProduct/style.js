@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
 	root: {
-        margin: '25vh auto',
-		maxWidth: '40%',
+        margin: '15vh auto',
+		minWidth: '45%',
 	},
 	media: {
 		height: 0 ,

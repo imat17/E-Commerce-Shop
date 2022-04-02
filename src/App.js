@@ -38,12 +38,14 @@ const App = () => {
 		setCart(cart);
 	};
 
+	const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+		
+	}
+
 	useEffect(() => {
 		fetchProducts();
 		fetchCart();
 	}, []);
-
-	// console.log(cart);
 
 	return (
 		<Router>
