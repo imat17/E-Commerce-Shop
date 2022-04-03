@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button} from '@material-ui/core';
 import { commerce } from '../../../lib/commerce';
 import useStyles from './style';
@@ -7,19 +8,18 @@ import PaymentForm from '../PaymentForm';
 
 const steps = ['Shipping adress', 'Payment Details'];
 
-const Checkout = ( { cart }) => {
+const Checkout = ( { cart, order, onCaptureCheckout, error }) => {
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState(null);
-    const [shippingData, setshippingData] = useState({})
+    const [shippingData, setShippingData] = useState({})
 
     // Génération d'un token aléatoire lors de l'arrivée sur le checkout process
     useEffect(() => {
         const generateToken = async () => {
             try {
                 const token = await commerce.checkout.generateToken(cart.id, { type: 'cart'});
-                console.log(token)
                 setCheckoutToken(token)
             } catch (err) {
 
@@ -32,16 +32,38 @@ const Checkout = ( { cart }) => {
     const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep -1)
     
     const next = (data) => {
-        setshippingData(data);
+        setShippingData(data);
         nextStep();
     }
 
-    const Confirmation = () => (
-        <div>Confirmation</div>
-    )
+    console.log(order);
 
-    const Form = () => activeStep === 0 ? <AdressForm checkoutToken={checkoutToken} next={next}/>
-     : <PaymentForm checkoutToken={checkoutToken} backStep={backStep}/>
+    let Confirmation = () => order.customer ? (
+        <>
+            <div>
+                <Typography variant='h5'>Thank you for your purchase, {order.customer.firstname} {order.customer.lastname}</Typography>
+                <Divider className={classes.divider}/>
+                <Typography variant='subtitle2'>Order reférence : {order.customer_reference}</Typography>
+            </div>
+            <br />
+            <Button variant='outlined' type='button' component={Link} to='/'>Back to Home</Button>
+        </>
+    ) : (
+        <div classes={classes.spinner}>
+            <CircularProgress />
+        </div>
+    );
+
+    if(error) {
+        <>
+            <Typography variant='h5'>Error: {error}</Typography>
+            <br />
+            <Button variant='outlined' type='button' component={Link} to='/'>Back to Home</Button>
+        </>
+    }
+
+    const Form = () => activeStep === 0 ? <AdressForm checkoutToken={checkoutToken} setShippingData={setShippingData} next={next}/>
+     : <PaymentForm checkoutToken={checkoutToken} backStep={backStep} onCaptureCheckout={onCaptureCheckout} nextStep={nextStep} shippingData={shippingData}/>
 
     return (
         <>

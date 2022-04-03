@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { commerce } from '../../lib/commerce';
-import {Grid, Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import {Grid, Card, CardMedia, CardContent, CardActions, Typography, IconButton, CircularProgress } from '@material-ui/core';
 import { AddShoppingCart } from '@material-ui/icons';
 // import Loader from '../Loader/Loader';
 
@@ -26,7 +26,10 @@ const OneProduct = ({ onAddToCart }) => {
         getOneProduct(id);
     },[id]);
     
-    if (!product) return "Loading..."
+    if (!product) return 
+        <div classes={classes.spinner}>
+            <CircularProgress />
+        </div>
 
     return (
         <Grid container spacing={0} direction="column" alignItems="center" justifyContent='center'>

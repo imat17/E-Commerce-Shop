@@ -2,11 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
 	root: {
-        margin: '15vh auto',
+		margin: '15vh auto',
 		minWidth: '45%',
 	},
 	media: {
-		height: 0 ,
+		height: 0,
 		paddingTop: '56.25%',
 	},
 	cardActions: {
@@ -19,5 +19,10 @@ export default makeStyles(() => ({
 	},
 	link: {
 		textDecoration: 'none',
-	  },
+	},
+	spinner: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 }));
