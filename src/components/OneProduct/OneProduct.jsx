@@ -26,10 +26,11 @@ const OneProduct = ({ onAddToCart }) => {
         getOneProduct(id);
     },[id]);
     
-    if (!product) return 
+    if (!product) return (
         <div classes={classes.spinner}>
             <CircularProgress />
         </div>
+    )
 
     return (
         <Grid container spacing={0} direction="column" alignItems="center" justifyContent='center'>
