@@ -9,36 +9,45 @@ import setup1 from '../../../assets/setup1.jpg';
 const Hero = () => {
 
     const classes = useStyles();
-    
+
     const dataText = [
         {
             text: 'My ratio went from 0.39 to 3.15 using their products',
             author: 'Gotaga'
         },
         {
-            text: 'Destroying pangolin lobbies is even easier with tech shop stuff',
+            text: 'Destroying pangolins lobbies is even easier with tech shop stuff',
             author: 'Chowh1'
         },
         {
             text: 'Selling my bath water is even faster',
             author: 'Amouranth'
+        },
+        {
+            text: 'But it was sure indeed !',
+            author: 'Sardoche'
+        },
+        {
+            text: 'The only shop i respect',
+            author: 'Dr.Disrespect'
         }
+
     ]
 
 
     const [quote, setQuote] = useState(dataText[0].text);
     const [author, setAuthor] = useState(dataText[0].author);
     
-    const shuffle = useCallback(() => {
+    const selectRandom = useCallback(() => {
         const index = Math.floor(Math.random() * dataText.length);
         setQuote(dataText[index].text);
         setAuthor(dataText[index].author)
     }, []);
 
     useEffect(() => {
-        const intervalID = setInterval(shuffle, 5000);
+        const intervalID = setInterval(selectRandom, 5000);
         return () => clearInterval(intervalID);
-    }, [shuffle])
+    }, [selectRandom])
 
 
     const images = [

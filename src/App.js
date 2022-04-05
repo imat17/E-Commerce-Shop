@@ -8,6 +8,7 @@ const App = () => {
 	const [cart, setCart] = useState({});
 	const [order, setOrder] = useState({});
 	const [errorMessage, setErrorMessage] = useState('');
+	const [categories, setCategories] = useState([]);
 
 	const fetchProducts = async () => {
 		const { data } = await commerce.products.list();
@@ -55,20 +56,27 @@ const App = () => {
 		}
 	}
 
+	const fetchCategories = async () => {
+		const { data } = await commerce.categories.list();
+		setCategories(data);
+	}
+
 	useEffect(() => {
 		fetchProducts();
 		fetchCart();
+		fetchCategories();
 	}, []);
 
 	return (
 		<Router>
 			<div>
 				<Navbar totalItems={cart.total_items} />
+				{/* <Search categories={categories}/> */}
 				<Routes>
 					<Route path='/' element={<Home />} />
 					<Route
 						path='/products'
-						element={<Products products={products} onAddToCart={handleAddToCart} />}
+						element={<Products categories={categories} products={products} onAddToCart={handleAddToCart} />}
 					/>
 					<Route path='/product/:id' element={<OneProduct onAddToCart={handleAddToCart}/>} />
 					<Route
